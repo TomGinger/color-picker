@@ -23,6 +23,19 @@ h1 {
     text-align: center;
 }
 
+/* Header container */
+
+.header-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.dark-mode-icon {
+    margin-top: 10px;
+    cursor: pointer;
+}
+
 /* Color Form */
 
 .color-form {
@@ -68,5 +81,13 @@ h1 {
     font-weight: bold;
     padding: 0.65em 0;
     cursor: pointer;
+}
+
+
+/* Copy text */ 
+
+.copy-message {
+    text-align: center;
+    color: #CA0724;
 }
 

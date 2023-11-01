@@ -2,8 +2,10 @@
 const colorBgContainer = document.getElementById("color-bg-container");
 const colorTextContainer = document.getElementById("color-text-container");
 const colorBtn = document.getElementById("color-btn");
-const copyText = document.getElementById("copy-text");
 const colorForm = document.getElementById("color-form");
+const copyMessage = document.getElementById("copy-message");
+
+const dakrMode = document.getElementById("dark-mode");
 
 //Fetching colors from color API to get rendered scheme pallete on website load
 fetch(`https://www.thecolorapi.com/scheme?hex=1219e0&mode=monochrome&count=5`)
@@ -54,9 +56,14 @@ function renderColors(data) {
 }
 
 //EventListener which allow us to copy hex value of rendered colors, it working with data attributes in renderColors function
-copyText.addEventListener("click", function(e) {
+document.addEventListener("click", function(e) {
     if(e.target.dataset.hex) {
-        alert("Your color been copied to clipboard!");
+        copyMessage.innerHTML = `
+        <p class="copy-message">You have copied color to your clipboard!</p>
+        `
+        setTimeout( () => {
+            copyMessage.innerHTML = "";
+        }, 2000);
         navigator.clipboard.writeText(e.target.dataset.hex);
     }
 })

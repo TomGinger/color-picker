@@ -4,12 +4,16 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     </head>
-    <body>
-        <div class="container">
-            
-            <h1>Color Scheme Selector</h1>
-            
+    <body class="dark-mode">
+        <div class="container"> 
+
+            <div class="header-container">
+                <h1>Color Scheme Selector</h1>
+                <svg class="dark-mode-icon" xmlns="http://www.w3.org/2000/svg" height="1.5em" viewBox="0 0 512 512"><path d="M448 256c0-106-86-192-192-192V448c106 0 192-86 192-192zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"/></svg>
+            </div>
+
             <div id="color-form" class="color-form">
                 
                 <input id="color-hex-value" type="color" value="#1219e0">
@@ -30,11 +34,11 @@
 
                 
             </div>
+
+            <div id="copy-message"></div>
             
-            <div id="copy-text">
                 <div id="color-bg-container" class="grid-container"></div>
                 <div id="color-text-container" class="grid-container"></div>
-            </div>
         </div>
             <script src="index.js"></script>
     </body>
