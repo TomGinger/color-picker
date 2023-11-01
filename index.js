@@ -51,6 +51,7 @@ function renderColors(data) {
 //EventListener which allow us to copy hex value of rendered colors, it working with data attributes in renderColors function
 copyText.addEventListener("click", function(e) {
     if(e.target.dataset.hex) {
+        alert("Your color been copied to clipboard!");
         navigator.clipboard.writeText(e.target.dataset.hex);
     }
 })
