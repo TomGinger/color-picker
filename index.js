@@ -5,6 +5,11 @@ const colorBtn = document.getElementById("color-btn");
 const copyText = document.getElementById("copy-text");
 const colorForm = document.getElementById("color-form");
 
+//Fetching colors from color API to get rendered scheme pallete on website load
+fetch(`https://www.thecolorapi.com/scheme?hex=1219e0&mode=monochrome&count=5`)
+    .then(res => res.json())
+    .then(data => colorLoop(data));
+
 
 // This eventListener is fetching color from API, on basis of users choosen value of input type=color and selected scheme, there are 5 colors selected
 colorBtn.addEventListener("click", () => {
