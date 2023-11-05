@@ -5,8 +5,7 @@ const colorBtn = document.getElementById("color-btn");
 const colorForm = document.getElementById("color-form");
 const copyMessage = document.getElementById("copy-message");
 
-const dakrMode = document.getElementById("dark-mode");
-
+const darkModeBtn = document.getElementById("dark-mode-btn");
 //Fetching colors from color API to get rendered scheme pallete on website load
 fetch(`https://www.thecolorapi.com/scheme?hex=1219e0&mode=monochrome&count=5`)
     .then(res => res.json())
@@ -68,6 +67,21 @@ document.addEventListener("click", function(e) {
     }
 })
 
+
+
+//EventListener to toggle dark mode on click on icon and it changes type of icon depending if its light mode or dark mode
+darkModeBtn.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+    
+    if(darkModeBtn.classList.contains("fa-moon")){
+
+        darkModeBtn.classList.replace("fa-moon", "fa-sun");
+
+    }else if(darkModeBtn.classList.contains("fa-sun")){
+
+        darkModeBtn.classList.replace("fa-sun", "fa-moon");
+    }
+})
 
 
 
