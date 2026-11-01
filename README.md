@@ -1,21 +1,36 @@
-# cocfc447680b0f191938b8582
+# Color Scheme Selector
 
-Quick start:
+A small web app that generates a color palette from a base color and a scheme
+(monochrome, analogic, complement, triad, …) using [The Color API](https://www.thecolorapi.com/).
 
+**Live demo:** https://tomginger.github.io/color-picker/
+
+## Features
+
+- Pick any base color and one of 8 color schemes
+- Click a color (or its hex code) to copy it to the clipboard
+- Dark mode – remembers your choice and respects the system setting
+- Responsive layout for mobile
+
+## Tech
+
+Vanilla HTML, CSS and JavaScript, bundled with [Vite](https://vitejs.dev/).
+The Color API is free and needs no API key.
+
+## Getting started
+
+```bash
+npm install
+npm run dev      # start dev server
+npm run build    # production build into dist/
+npm run preview  # preview the production build
 ```
-$ npm install
-$ npm start
-````
 
-Head over to https://vitejs.dev/ to learn more about using vite
-## About Scrimba
+## Deployment
 
-At Scrimba our goal is to create the best possible coding school at the cost of a gym membership! 💜
-If we succeed with this, it will give anyone who wants to become a software developer a realistic shot at succeeding, regardless of where they live and the size of their wallets 🎉
-The Frontend Developer Career Path aims to teach you everything you need to become a Junior Developer, or you could take a deep-dive with one of our advanced courses 🚀
+Every push to `main` is built and deployed to GitHub Pages by
+`.github/workflows/deploy.yml`.
 
-- [Our courses](https://scrimba.com/allcourses)
-- [The Frontend Career Path](https://scrimba.com/learn/frontend)
-- [Become a Scrimba Pro member](https://scrimba.com/pricing)
+---
 
-Happy Coding!
+Built as part of the [Scrimba](https://scrimba.com/) Frontend Developer Career Path.

@@ -1,8 +1,11 @@
 {
-  "name": "project",
+  "name": "color-scheme-selector",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
   "dependencies": {},
   "devDependencies": {
-    "vite": "latest"
+    "vite": "^8.3.5"
   },
   "scripts": {
     "start": "vite",

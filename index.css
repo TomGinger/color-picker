@@ -72,7 +72,8 @@ h1 {
 }
 
 #color-btn {
-    background-color: white; 
+    background-color: white;
+    color: #264653;
 }
 
 /* Rendered stuff */
@@ -98,6 +99,10 @@ h1 {
     color: #CA0724;
 }
 
+.dark-mode .copy-message {
+    color: #f4a261;
+}
+
 /* Dark mode */
 
 .dark-mode {
@@ -106,8 +111,47 @@ h1 {
 }
 
 
-.icon {
+.icon-btn {
     margin-top: 0.25em;
     font-size: 2em;
+    color: inherit;
+    background: none;
+    border: none;
     cursor: pointer;
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+    .container {
+        margin: 0;
+        border-width: 0;
+    }
+
+    .color-form {
+        padding: 1em;
+        flex-wrap: wrap;
+        gap: 0.75em;
+    }
+
+    #color-hex-value {
+        width: 20%;
+    }
+
+    #color-scheme {
+        width: 75%;
+    }
+
+    #color-btn {
+        width: 100%;
+        padding: 0.6em;
+    }
+
+    .rendered-colors {
+        height: 250px;
+    }
+
+    .rendered-text {
+        font-size: 0.8em;
+    }
 }
