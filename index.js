@@ -1,90 +1,90 @@
-//Selectors for needed id´s
+// Selectors for needed ids
 const colorBgContainer = document.getElementById("color-bg-container");
 const colorTextContainer = document.getElementById("color-text-container");
-const colorBtn = document.getElementById("color-btn");
 const colorForm = document.getElementById("color-form");
+const colorHexInput = document.getElementById("color-hex-value");
+const colorSchemeSelect = document.getElementById("color-scheme");
 const copyMessage = document.getElementById("copy-message");
-
 const darkModeBtn = document.getElementById("dark-mode-btn");
-//Fetching colors from color API to get rendered scheme pallete on website load
-fetch(`https://www.thecolorapi.com/scheme?hex=1219e0&mode=monochrome&count=5`)
-    .then(res => res.json())
-    .then(data => colorLoop(data));
+const darkModeIcon = document.getElementById("dark-mode-icon");
 
+const COLOR_COUNT = 5;
+let messageTimeout;
 
-// This eventListener is fetching color from API, on basis of users choosen value of input type=color and selected scheme, there are 5 colors selected
-colorBtn.addEventListener("click", () => {
-    const colorHexValue = document.getElementById("color-hex-value").value.slice(1);
-    const colorScheme = document.getElementById("color-scheme").value;
-    
-    fetch(`https://www.thecolorapi.com/scheme?hex=${colorHexValue}&mode=${colorScheme}&count=5`)
-        .then(res => res.json())
-        .then(data => colorLoop(data));
-    
-})
-
-
-// Function that is in charge of looping through data from API and adding only hex value of color we need and pushing it to new array
-function colorLoop(data) {
-    let colorArray = [];
-    for(let color of data.colors) {
-        colorArray.push({
-            hexValue: color.hex.value
-        })
+// Fetches a color scheme from The Color API (https://www.thecolorapi.com/) – no API key needed
+async function getScheme(hex, mode) {
+    try {
+        const url = `https://www.thecolorapi.com/scheme?hex=${hex}&mode=${mode}&count=${COLOR_COUNT}`;
+        const res = await fetch(url);
+        if (!res.ok) {
+            throw new Error(`API responded with status ${res.status}`);
+        }
+        const data = await res.json();
+        renderColors(data.colors.map(color => color.hex.value));
+    } catch (err) {
+        console.error(err);
+        showMessage("Could not load the color scheme. Please try again.");
     }
-    renderColors(colorArray);
 }
 
-//This function renders looped data from colorLoop function to website, it go through all 5 selected colors and render them using forEach
-function renderColors(data) {
-    let colorBackground = "";
-    let colorHexText = "";
-    
-    data.forEach(color => {
-        colorBackground += `
-        <div class="rendered-colors" style="background-color:${color.hexValue}" data-hex="${color.hexValue}"></div>
-        `
-        colorHexText += `
-        <div class="rendered-text" data-hex="${color.hexValue}">${color.hexValue}</div>
-        `
-    })
-    
-    
-    colorBgContainer.innerHTML = colorBackground;
-    colorTextContainer.innerHTML = colorHexText;
+// Reads the user's chosen color and scheme and fetches the matching palette
+function getSchemeFromForm() {
+    const hex = colorHexInput.value.slice(1);
+    const mode = colorSchemeSelect.value;
+    getScheme(hex, mode);
 }
 
-//EventListener which allow us to copy hex value of rendered colors, it working with data attributes in renderColors function
-document.addEventListener("click", function(e) {
-    if(e.target.dataset.hex) {
-        copyMessage.innerHTML = `
-        <p class="copy-message">You have copied color to your clipboard!</p>
-        `
-        setTimeout( () => {
-            copyMessage.innerHTML = "";
-        }, 2000);
-        navigator.clipboard.writeText(e.target.dataset.hex);
-    }
-})
+// Renders the colors (and their hex values) to the page
+function renderColors(hexValues) {
+    colorBgContainer.innerHTML = hexValues.map(hex => `
+        <div class="rendered-colors" style="background-color:${hex}" data-hex="${hex}" title="Copy ${hex}"></div>
+    `).join("");
 
+    colorTextContainer.innerHTML = hexValues.map(hex => `
+        <div class="rendered-text" data-hex="${hex}" title="Copy ${hex}">${hex}</div>
+    `).join("");
+}
 
+// Shows a short message under the form for 2 seconds
+function showMessage(text) {
+    copyMessage.innerHTML = `<p class="copy-message">${text}</p>`;
+    clearTimeout(messageTimeout);
+    messageTimeout = setTimeout(() => {
+        copyMessage.innerHTML = "";
+    }, 2000);
+}
 
-//EventListener to toggle dark mode on click on icon and it changes type of icon depending if its light mode or dark mode
+// Form submit (button click or Enter) fetches a new scheme
+colorForm.addEventListener("submit", e => {
+    e.preventDefault();
+    getSchemeFromForm();
+});
+
+// Copy hex value of a rendered color, works with the data-hex attributes from renderColors
+document.addEventListener("click", e => {
+    const hex = e.target.dataset.hex;
+    if (!hex) return;
+
+    navigator.clipboard.writeText(hex)
+        .then(() => showMessage(`You have copied ${hex} to your clipboard!`))
+        .catch(() => showMessage("Copying to clipboard failed."));
+});
+
+// Dark mode – the initial theme is applied by an inline script in index.html,
+// here we only sync the icon and handle toggling (and remember the choice)
+function updateDarkModeIcon() {
+    const isDark = document.documentElement.classList.contains("dark-mode");
+    darkModeIcon.classList.toggle("fa-moon", !isDark);
+    darkModeIcon.classList.toggle("fa-sun", isDark);
+}
+
 darkModeBtn.addEventListener("click", () => {
-    document.body.classList.toggle("dark-mode");
-    
-    if(darkModeBtn.classList.contains("fa-moon")){
+    const isDark = document.documentElement.classList.toggle("dark-mode");
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+    updateDarkModeIcon();
+});
 
-        darkModeBtn.classList.replace("fa-moon", "fa-sun");
+updateDarkModeIcon();
 
-    }else if(darkModeBtn.classList.contains("fa-sun")){
-
-        darkModeBtn.classList.replace("fa-sun", "fa-moon");
-    }
-})
-
-
-
-//https://www.thecolorapi.com/
-
-
+// Render a palette on page load
+getSchemeFromForm();

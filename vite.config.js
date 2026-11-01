@@ -1,6 +1,7 @@
-import {defineConfig} from 'vite'
-
+import { defineConfig } from 'vite'
 
 export default defineConfig({
-	plugins: []	
+	// Relative paths so the build works on GitHub Pages (served from /color-picker/)
+	base: './',
+	plugins: []
 })
